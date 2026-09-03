@@ -5,3 +5,4 @@ publish/
 out_ubuntu/
 out/
 *.user
+out_fwdep/
