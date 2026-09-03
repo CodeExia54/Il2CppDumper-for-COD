@@ -47,13 +47,18 @@ jobs:
           --self-contained false
           -o publish/framework-dependent/${{ matrix.rid }}
 
-      # Ship the helper script alongside the Linux binaries so the artifact zip
-      # is usable as-is: ./auto_dump.sh <folder>
-      - name: Bundle auto_dump.sh + README (linux-x64 only)
-        if: matrix.rid == 'linux-x64'
+      # Ship the helper script + usage README alongside the binaries so the
+      # artifact zip is usable as-is:
+      #   Linux:   ./auto_dump.sh <folder>
+      #   Windows: auto_dump.bat <folder>
+      - name: Bundle helper script + README
         run: |
           for dir in publish/self-contained/${{ matrix.rid }} publish/framework-dependent/${{ matrix.rid }}; do
-            install -m 755 auto_dump.sh "$dir/auto_dump.sh"
+            if [ "${{ matrix.rid }}" = "win-x64" ]; then
+              install -m 644 auto_dump.bat "$dir/auto_dump.bat"
+            else
+              install -m 755 auto_dump.sh "$dir/auto_dump.sh"
+            fi
             install -m 644 ARTIFACT_README.md "$dir/README.md"
           done
 
