@@ -49,11 +49,13 @@ jobs:
 
       # Ship the helper script alongside the Linux binaries so the artifact zip
       # is usable as-is: ./auto_dump.sh <folder>
-      - name: Bundle auto_dump.sh (linux-x64 only)
+      - name: Bundle auto_dump.sh + README (linux-x64 only)
         if: matrix.rid == 'linux-x64'
         run: |
-          install -m 755 auto_dump.sh publish/self-contained/${{ matrix.rid }}/auto_dump.sh
-          install -m 755 auto_dump.sh publish/framework-dependent/${{ matrix.rid }}/auto_dump.sh
+          for dir in publish/self-contained/${{ matrix.rid }} publish/framework-dependent/${{ matrix.rid }}; do
+            install -m 755 auto_dump.sh "$dir/auto_dump.sh"
+            install -m 644 ARTIFACT_README.md "$dir/README.md"
+          done
 
       - name: Upload self-contained artifact (no .NET needed)
         uses: actions/upload-artifact@v4

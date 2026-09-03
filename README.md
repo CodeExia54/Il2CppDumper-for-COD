@@ -15,6 +15,20 @@ The program will then generate all the output files in current working directory
 
 For more details, check out the credit.
 
+### Linux: auto_dump.sh
+
+On Linux, `auto_dump.sh` does it for you — point it at a folder holding the
+`.so` and `global-metadata.dat` and it picks them up and writes the output to
+`<so-name>_dump/`:
+
+```bash
+./auto_dump.sh /path/to/folder
+```
+
+The Linux build artifacts ship this script alongside the binary. See
+[ARTIFACT_README.md](ARTIFACT_README.md) — the same file is included in those
+zips as `README.md`.
+
 ## Credits
 
  - Perface - [Il2CppDumper](https://github.com/Perfare/Il2CppDumper)
